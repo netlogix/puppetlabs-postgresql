@@ -103,7 +103,6 @@ define postgresql::server::role (
       command   => Sensitive($create_role_command),
       unless    => "SELECT 1 FROM pg_roles WHERE rolname = '${username}'",
       require   => undef,
-      sensitive => true,
     }
 
     postgresql_psql { "ALTER ROLE \"${username}\" ${superuser_sql}":
@@ -182,7 +181,6 @@ define postgresql::server::role (
       postgresql_psql { "ALTER ROLE ${username} ENCRYPTED PASSWORD ****":
         command   => Sensitive($pw_command),
         unless    => Sensitive($unless_pw_command),
-        sensitive => true,
       }
     }
   } else {
